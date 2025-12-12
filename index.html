@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnitHub: Universal Calculator & Conversion Cheat Sheet</title>
+    <meta name="description" content="The comprehensive cheat sheet for Metric/Imperial conversions (Length, Weight, Volume, Temperature, Area, Shoe Sizes) and general arithmetic calculation.">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for a clean, professional, and readable look */
+        .primary-color { color: #3b82f6; } /* Blue for visibility */
+        .bg-primary { background-color: #3b82f6; }
+        .input-group { display: flex; align-items: center; }
+        .input-group input { flex-grow: 1; min-width: 0; }
+        .input-group:not(:last-child) { margin-bottom: 0.5rem; }
+        
+        /* Styles for the General Calculator */
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem; /* gap-3 in Tailwind */
+        }
+        .btn {
+            /* Reduced vertical padding from 1.5rem to 1rem for shorter height */
+            padding: 1rem 0; 
+            border-radius: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            transition: background-color 0.1s;
+            cursor: pointer;
+        }
+        .span-2 {
+            grid-column: span 2;
+        }
+
+        /* --- Print Optimization CSS --- */
+        @media print {
+            /* Hide the Calculator and Header when printing */
+            header, footer, .calculator-body, .time-zone-widget, .date-widget {
+                display: none !important;
+            }
+            /* Ensure text is black and background is white */
+            body {
+                background-color: white !important;
+                color: black !important;
+            }
+            /* Ensure tables don't scroll horizontally when printed */
+            .overflow-x-auto {
+                overflow-x: visible !important;
+            }
+            /* Ensure main content takes full width */
+            main {
+                max-width: 100% !important;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans" onload="updateAllClocks(); updateDateFormats()">
+    
+    <!-- Header Section -->
+    <header class="bg-primary text-white shadow-xl p-4 md:p-6 mb-8">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
+                🧮 UnitHub: Universal Calculator & Conversion Cheat Sheet
+            </h1>
+            <p class="text-gray-200 mt-1 text-sm md:text-base">Your complete tool for numbers, measurements, and unit conversions.</p>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-4xl mx-auto px-4">
+        
+        <p class="text-lg text-gray-700 mb-8">This page combines a general calculator with five sections containing static conversion tables for quick reference, making **UnitHub.com** your definitive source.</p>
+
+
+        <!-- 1. Length/Distance Conversion Table -->
+        <h2 class="text-2xl font-bold primary-color border-b pb-2 mb-4">📏 Length & Distance (Tables)</h2>
+        <div class="overflow-x-auto bg-white rounded-lg shadow-xl mb-10">
+            <table class="min-w-full divide-y divide-gray-200 text-sm">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-3 text-left font-medium text-gray-600 uppercase tracking-wider rounded-tl-lg">Imperial Unit</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600 uppercase tracking-wider">Exact Metric Equivalent</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600 uppercase tracking-wider">Metric Unit</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">1 Inch (in)</td>
+                        <td class="px-4 py-3 text-center">2.54</td>
+                        <td class="px-4 py-3">Centimeters (cm)</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">1 Foot (ft)</td>
+                        <td class="px-4 py-3 text-center">0.3048</td>
+                        <td class="px-4 py-3">Meters (m)</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">1 Mile (mi)</td>
+                        <td class="px-4 py-3 text-center">1.60934</td>
+                        <td class="px-4 py-3">Kilometers (km)</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="px-4 py-3 font-semibold">1 Centimeter (cm)</td>
+                        <td class="px-4 py-3 text-center">0.3937</td>
+                        <td class="px-4 py-3">Inches (in)</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="px-4 py-3 font-semibold">1 Kilometer (km)</td>
+                        <td class="px-4 py-3 text-center">0.62137</td>
+                        <td class="px-4 py-3">Miles (mi)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- NEW: Metric Prefixes Guide -->
+        <h2 class="text-2xl font-bold primary-color border-b pb-2 mb-4">🧪 Metric Prefixes (SI Multiples)</h2>
+        <p class="text-gray-700 mb-4">Understanding the prefix system is the key to converting between metric units (e.g., from milliliters to liters, or grams to kilograms).</p>
+        <div class="overflow-x-auto bg-white rounded-lg shadow-xl mb-10">
+            <table class="min-w-full divide-y divide-gray-200 text-sm">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-3 text-left font-medium text-gray-600 uppercase tracking-wider rounded-tl-lg">Prefix</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600 uppercase tracking-wider">Symbol</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600 uppercase tracking-wider">Multiplier</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600 uppercase tracking-wider">Example</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">Kilo</td>
+                        <td class="px-4 py-3 text-center">k</td>
+                        <td class="px-4 py-3 text-center">1,000</td>
+                        <td class="px-4 py-3">1 Kilogram (kg) = 1,000 Grams</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">Hecto</td>
+                        <td class="px-4 py-3 text-center">h</td>
+                        <td class="px-4 py-3 text-center">100</td>
+                        <td class="px-4 py-3">1 Hectoliter (hL) = 100 Liters</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">Deca</td>
+                        <td class="px-4 py-3 text-center">da</td>
+                        <td class="px-4 py-3 text-center">10</td>
+                        <td class="px-4 py-3">1 Decameter (dam) = 10 Meters</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="px-4 py-3 font-semibold">Deci</td>
+                        <td class="px-4 py-3 text-center">d</td>
+                        <td class="px-4 py-3 text-center">0.1</td>
+                        <td class="px-4 py-3">1 Deciliter (dL) = 0.1 Liters</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="px-4 py-3 font-semibold">Centi</td>
+                        <td class="px-4 py-3 text-center">c</td>
+                        <td class="px-4 py-3 text-center">0.01</td>
+                        <td class="px-4 py-3">1 Centimeter (cm) = 0.01 Meters</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="px-4 py-3 font-semibold">Milli</td>
+                        <td class="px-4 py-3 text-center">m</td>
+                        <td class="px-4 py-3 text-center">0.001</td>
+                        <td class="px-4 py-3">1 Milliliter (mL) = 0.001 Liters</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- NEW: Area Conversion Table -->
+        <h2 class="text-2xl font-bold primary-color border-b pb-2 mb-4">📐 Area & Land Measurement (Tables)</h2>
+        <p class="text-gray-700 mb-4">Crucial conversions for real estate, engineering, and mapping projects.</p>
+        <div class="overflow-x-auto bg-white rounded-lg shadow-xl mb-10">
+            <table class="min-w-full divide-y divide-gray-200 text-sm">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-3 text-left font-medium text-gray-600 uppercase tracking-wider rounded-tl-lg">Imperial Unit</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600 uppercase tracking-wider">Metric Equivalent</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600 uppercase tracking-wider">Metric Unit</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">1 Square Foot ($ft^2$)</td>
+                        <td class="px-4 py-3 text-center">0.0929</td>
+                        <td class="px-4 py-3">Square Meters ($m^2$)</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">1 Acre (ac)</td>
+                        <td class="px-4 py-3 text-center">0.4047</td>
+                        <td class="px-4 py-3">Hectares (ha)</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">1 Square Mile ($mi^2$)</td>
+                        <td class="px-4 py-3 text-center">2.590</td>
+                        <td class="px-4 py-3">Square Kilometers ($km^2$)</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="px-4 py-3 font-semibold">1 Hectare (ha)</td>
+                        <td class="px-4 py-3 text-center">2.471</td>
+                        <td class="px-4 py-3">Acres (ac)</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="px-4 py-3 font-semibold">1 Square Meter ($m^2$)</td>
+                        <td class="px-4 py-3 text-center">10.764</td>
+                        <td class="px-4 py-3">Square Feet ($ft^2$)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 2. Mass/Weight Conversion Table -->
+        <h2 class="text-2xl font-bold primary-color border-b pb-2 mb-4">⚖️ Weight & Mass (Tables)</h2>
+        <div class="overflow-x-auto bg-white rounded-lg shadow-xl mb-10">
+            <table class="min-w-full divide-y divide-gray-200 text-sm">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-3 text-left font-medium text-gray-600 uppercase tracking-wider rounded-tl-lg">Imperial Unit</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600 uppercase tracking-wider">Exact Metric Equivalent</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600 uppercase tracking-wider">Metric Unit</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">1 Ounce (oz)</td>
+                        <td class="px-4 py-3 text-center">28.3495</td>
+                        <td class="px-4 py-3">Grams (g)</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">1 Pound (lb)</td>
+                        <td class="px-4 py-3 text-center">0.45359</td>
+                        <td class="px-4 py-3">Kilograms (kg)</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="px-4 py-3 font-semibold">1 Gram (g)</td>
+                        <td class="px-4 py-3 text-center">0.03527</td>
+                        <td class="px-4 py-3">Ounces (oz)</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="px-4 py-3 font-semibold">1 Kilogram (kg)</td>
+                        <td class="px-4 py-3 text-center">2.20462</td>
+                        <td class="px-4 py-3">Pounds (lb)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 3. Temperature Conversion Table -->
+        <h2 class="text-2xl font-bold primary-color border-b pb-2 mb-4">🌡️ Temperature (Tables)</h2>
+        <div class="bg-white p-6 rounded-lg shadow-xl mb-10">
+            <p class="text-gray-700 mb-4">Temperature is often the most confusing conversion. Here are the simple formulas and key reference points:</p>
+            <ul class="list-disc list-inside ml-4 space-y-2 text-gray-800">
+                <li class="font-semibold">Fahrenheit to Celsius: C = (F - 32) * 5 / 9</li>
+                <li class="font-semibold">Celsius to Fahrenheit: F = (C * 9 / 5) + 32</li>
+            </ul>
+            <div class="mt-4 bg-blue-50 p-3 rounded-md">
+                <p class="font-bold text-blue-700">Key Reference Points:</p>
+                <ul class="list-disc list-inside ml-4 text-sm">
+                    <li>Freezing Point of Water: 0&deg;C (32&deg;F)</li>
+                    <li>Boiling Point of Water: 100&deg;C (212&deg;F)</li>
+                    <li>Room Temperature (~70&deg;F): &asymp; 21&deg;C</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 4. Volume Conversion Table (Cooking/Liquids) -->
+        <h2 class="text-2xl font-bold primary-color border-b pb-2 mb-4">🥛 Volume (Tables)</h2>
+        <p class="text-gray-700 mb-4">This table focuses on US Fluid Ounces and Liters.</p>
+        <div class="overflow-x-auto bg-white rounded-lg shadow-xl mb-10">
+            <table class="min-w-full divide-y divide-gray-200 text-sm">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-3 text-left font-medium text-gray-600 uppercase tracking-wider rounded-tl-lg">Imperial (US) Unit</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600 uppercase tracking-wider">Exact Metric Equivalent</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600 uppercase tracking-wider">Metric Unit</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">1 Fluid Ounce (fl oz)</td>
+                        <td class="px-4 py-3 text-center">29.5735</td>
+                        <td class="px-4 py-3">Milliliters (mL)</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">1 Quart (qt)</td>
+                        <td class="px-4 py-3 text-center">0.94635</td>
+                        <td class="px-4 py-3">Liters (L)</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">1 Gallon (gal)</td>
+                        <td class="px-4 py-3 text-center">3.78541</td>
+                        <td class="px-4 py-3">Liters (L)</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="px-4 py-3 font-semibold">1 Milliliter (mL)</td>
+                        <td class="px-4 py-3 text-center">0.03381</td>
+                        <td class="px-4 py-3">Fluid Ounces (fl oz)</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="px-4 py-3 font-semibold">1 Liter (L)</td>
+                        <td class="px-4 py-3 text-center">1.05669</td>
+                        <td class="px-4 py-3">Quarts (qt)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- NEW: Specialized Cooking Volume Table -->
+        <h2 class="text-2xl font-bold primary-color border-b pb-2 mb-4">🍳 Cooking Volume (US vs. Imperial/UK)</h2>
+        <p class="text-gray-700 mb-4">A vital table for international recipes: Imperial (UK) fluid units are generally larger than US fluid units, leading to major cooking errors if the conversion is ignored.</p>
+        <div class="overflow-x-auto bg-white rounded-lg shadow-xl mb-10">
+            <table class="min-w-full divide-y divide-gray-200 text-sm">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-3 text-left font-medium text-gray-600 uppercase tracking-wider rounded-tl-lg">Unit</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600 uppercase tracking-wider">US Fluid Ounce (fl oz)</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600 uppercase tracking-wider">Imperial (UK) Fluid Ounce (fl oz)</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600 uppercase tracking-wider">Difference Factor</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">1 fl oz</td>
+                        <td class="px-4 py-3 text-center">29.57 mL</td>
+                        <td class="px-4 py-3 text-center">28.41 mL</td>
+                        <td class="px-4 py-3 text-center">~4% Smaller (US)</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">1 Pint (pt)</td>
+                        <td class="px-4 py-3 text-center">473.18 mL</td>
+                        <td class="px-4 py-3 text-center">568.26 mL</td>
+                        <td class="px-4 py-3 text-center font-bold text-red-600">~20% Larger (UK)</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">1 Gallon (gal)</td>
+                        <td class="px-4 py-3 text-center">3.785 L</td>
+                        <td class="px-4 py-3 text-center">4.546 L</td>
+                        <td class="px-4 py-3 text-center font-bold text-red-600">~20% Larger (UK)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- NEW: Specialized Conversion Tables (Shoe Sizing) -->
+        <h2 class="text-2xl font-bold primary-color border-b pb-2 mb-4">👟 Specialized Conversions (Shoe Sizing)</h2>
+        <p class="text-gray-700 mb-4">A common point of international confusion: convert between US, UK, and European shoe sizes for men and women.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <!-- Men's Shoe Sizes -->
+            <div class="overflow-x-auto bg-white rounded-lg shadow-xl">
+                <table class="min-w-full divide-y divide-gray-200 text-sm">
+                    <thead>
+                        <tr>
+                            <th colspan="3" class="px-4 py-3 text-white bg-blue-400 font-medium uppercase tracking-wider rounded-t-lg">Men's Shoe Sizing</th>
+                        </tr>
+                        <tr>
+                            <th class="px-4 py-3 text-left text-gray-600 uppercase">US</th>
+                            <th class="px-4 py-3 text-center text-gray-600 uppercase">EU</th>
+                            <th class="px-4 py-3 text-center text-gray-600 uppercase">UK</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr><td class="px-4 py-2 font-semibold">7</td><td class="px-4 py-2 text-center">40</td><td class="px-4 py-2 text-center">6.5</td></tr>
+                        <tr><td class="px-4 py-2 font-semibold">8</td><td class="px-4 py-2 text-center">41</td><td class="px-4 py-2 text-center">7.5</td></tr>
+                        <tr><td class="px-4 py-2 font-semibold">9</td><td class="px-4 py-2 text-center">42</td><td class="px-4 py-2 text-center">8.5</td></tr>
+                        <tr><td class="px-4 py-2 font-semibold">10</td><td class="px-4 py-2 text-center">43</td><td class="px-4 py-2 text-center">9.5</td></tr>
+                        <tr><td class="px-4 py-2 font-semibold">11</td><td class="px-4 py-2 text-center">44</td><td class="px-4 py-2 text-center">10.5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Women's Shoe Sizes -->
+            <div class="overflow-x-auto bg-white rounded-lg shadow-xl">
+                <table class="min-w-full divide-y divide-gray-200 text-sm">
+                    <thead>
+                        <tr>
+                            <th colspan="3" class="px-4 py-3 text-white bg-blue-400 font-medium uppercase tracking-wider rounded-t-lg">Women's Shoe Sizing</th>
+                        </tr>
+                        <tr>
+                            <th class="px-4 py-3 text-left text-gray-600 uppercase">US</th>
+                            <th class="px-4 py-3 text-center text-gray-600 uppercase">EU</th>
+                            <th class="px-4 py-3 text-center text-gray-600 uppercase">UK</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr><td class="px-4 py-2 font-semibold">6</td><td class="px-4 py-2 text-center">36-37</td><td class="px-4 py-2 text-center">4</td></tr>
+                        <tr><td class="px-4 py-2 font-semibold">7</td><td class="px-4 py-2 text-center">37-38</td><td class="px-4 py-2 text-center">5</td></tr>
+                        <tr><td class="px-4 py-2 text-semibold">8</td><td class="px-4 py-2 text-center">38-39</td><td class="px-4 py-2 text-center">6</td></tr>
+                        <tr><td class="px-4 py-2 text-semibold">9</td><td class="px-4 py-2 text-center">39-40</td><td class="px-4 py-2 text-center">7</td></tr>
+                        <tr><td class="px-4 py-2 text-semibold">10</td><td class="px-4 py-2 text-center">40-41</td><td class="px-4 py-2 text-center">8</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- NEW: Time Zone Widget -->
+        <h2 class="text-2xl font-bold primary-color border-b pb-2 mb-4 time-zone-widget">⏰ Global Time Zone Comparison</h2>
+        <div class="bg-blue-50 p-6 rounded-lg shadow-inner mb-6 time-zone-widget">
+            <p class="text-gray-700 mb-4">See the current time in major international travel and business hubs, dynamically calculated from your device's clock.</p>
+            <div class="grid grid-cols-2 gap-4 text-sm font-mono" id="time-zone-display">
+                <!-- Clock outputs go here -->
+                <div class="bg-white p-3 rounded shadow"><p class="font-bold">Your Local Time:</p><span id="localTime" class="text-lg"></span></div>
+                <div class="bg-white p-3 rounded shadow"><p class="font-bold">New York (EST):</p><span id="time-america/new_york" class="text-lg"></span></div>
+                <div class="bg-white p-3 rounded shadow"><p class="font-bold">London (GMT):</p><span id="time-europe/london" class="text-lg"></span></div>
+                <div class="bg-white p-3 rounded shadow"><p class="font-bold">Paris (CET):</p><span id="time-europe/paris" class="text-lg"></span></div>
+                <div class="bg-white p-3 rounded shadow"><p class="font-bold">Dubai (GST):</p><span id="time-asia/dubai" class="text-lg"></span></div>
+                <div class="bg-white p-3 rounded shadow"><p class="font-bold">Tokyo (JST):</p><span id="time-asia/tokyo" class="text-lg"></span></div>
+            </div>
+        </div>
+
+        <!-- NEW: Date Format Comparison Widget -->
+        <h2 class="text-2xl font-bold primary-color border-b pb-2 mb-4 date-widget">📅 Date Format Comparison</h2>
+        <div class="bg-blue-50 p-6 rounded-lg shadow-inner mb-10 date-widget">
+             <p class="text-gray-700 mb-4">Avoid confusion when entering dates online. See today's date in the two most common global formats:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-mono" id="date-format-display">
+                <div class="bg-white p-3 rounded shadow"><p class="font-bold">US Format (MM/DD/YYYY):</p><span id="date-us" class="text-lg"></span></div>
+                <div class="bg-white p-3 rounded shadow"><p class="font-bold">International Format (DD/MM/YYYY):</p><span id="date-int" class="text-lg"></span></div>
+            </div>
+        </div>
+        
+        <!-- General Arithmetic Calculator Body (AT BOTTOM) -->
+        <h2 class="text-2xl font-bold primary-color border-b pb-2 mb-4">🔢 General Arithmetic Calculator</h2>
+        <div class="calculator-body bg-white p-6 rounded-xl shadow-2xl w-full max-w-sm mx-auto mb-10">
+            
+            <!-- Display -->
+            <input type="text" id="generalDisplay" class="w-full text-right text-4xl mb-4 p-4 border-2 border-gray-300 rounded-lg bg-gray-50 font-mono" readonly value="0">
+            
+            <!-- Buttons Grid -->
+            <div class="calculator-grid">
+                
+                <!-- Row 1 -->
+                <button class="btn bg-red-500 hover:bg-red-600 text-white span-2" onclick="generalCalculator.clear()">AC</button>
+                <button class="btn bg-gray-300 hover:bg-gray-400 text-gray-800" onclick="generalCalculator.chooseOperation('/')">/</button>
+                <button class="btn bg-gray-300 hover:bg-gray-400 text-gray-800" onclick="generalCalculator.chooseOperation('*')">*</button>
+
+                <!-- Row 2 -->
+                <button class="btn bg-gray-200 hover:bg-gray-300 text-gray-800" onclick="generalCalculator.appendNumber(7)">7</button>
+                <button class="btn bg-gray-200 hover:bg-gray-300 text-gray-800" onclick="generalCalculator.appendNumber(8)">8</button>
+                <button class="btn bg-gray-200 hover:bg-gray-300 text-gray-800" onclick="generalCalculator.appendNumber(9)">9</button>
+                <button class="btn bg-gray-300 hover:bg-gray-400 text-gray-800" onclick="generalCalculator.chooseOperation('-')">-</button>
+                
+                <!-- Row 3 -->
+                <button class="btn bg-gray-200 hover:bg-gray-300 text-gray-800" onclick="generalCalculator.appendNumber(4)">4</button>
+                <button class="btn bg-gray-200 hover:bg-gray-300 text-gray-800" onclick="generalCalculator.appendNumber(5)">5</button>
+                <button class="btn bg-gray-200 hover:bg-gray-300 text-gray-800" onclick="generalCalculator.appendNumber(6)">6</button>
+                <button class="btn bg-gray-300 hover:bg-gray-400 text-gray-800" onclick="generalCalculator.chooseOperation('+')">+</button>
+
+                <!-- Row 4 -->
+                <button class="btn bg-gray-200 hover:bg-gray-300 text-gray-800" onclick="generalCalculator.appendNumber(1)">1</button>
+                <button class="btn bg-gray-200 hover:bg-gray-300 text-gray-800" onclick="generalCalculator.appendNumber(2)">2</button>
+                <button class="btn bg-gray-200 hover:bg-gray-300 text-gray-800" onclick="generalCalculator.appendNumber(3)">3</button>
+                <button class="btn bg-primary hover:bg-blue-600 text-white row-span-2" onclick="generalCalculator.calculate()">=</button>
+
+                <!-- Row 5 -->
+                <button class="btn bg-gray-200 hover:bg-gray-300 text-gray-800 span-2" onclick="generalCalculator.appendNumber(0)">0</button>
+                <button class="btn bg-gray-200 hover:bg-gray-300 text-gray-800" onclick="generalCalculator.appendNumber('.')">.</button>
+                
+            </div>
+        </div>
+
+        <footer class="mt-12 pt-6 border-t border-gray-300 text-center text-sm text-gray-500">
+            <p>Data last verified: December 2025. All conversion factors are based on internationally accepted standards.</p>
+        </footer>
+
+    </main>
+
+    <!-- JavaScript for Calculator Logic and Time Zone Widget -->
+    <script>
+        
+        // --- ARITHMETIC CALCULATOR CLASS ---
+        class Calculator {
+            constructor(displayElement) {
+                this.displayElement = displayElement;
+                this.clear();
+            }
+
+            clear() {
+                this.currentInput = '0';
+                this.previousInput = '';
+                this.operation = undefined;
+                this.updateDisplay();
+            }
+
+            appendNumber(number) {
+                if (number === '.' && this.currentInput.includes('.')) return;
+                
+                // Fix: Ensure currentInput displays the second number being typed
+                if (this.currentInput === '0' && number !== '.') {
+                    this.currentInput = number.toString();
+                } else if (this.currentInput === '') {
+                    // This handles the transition after selecting an operator.
+                    this.currentInput = number.toString();
+                } else {
+                    this.currentInput = this.currentInput.toString() + number.toString();
+                }
+                this.updateDisplay();
+            }
+
+            chooseOperation(operation) {
+                if (this.currentInput === '') return;
+                if (this.previousInput !== '') {
+                    this.calculate();
+                }
+                this.operation = operation;
+                this.previousInput = this.currentInput;
+                this.currentInput = '';
+                this.updateDisplay();
+            }
+
+            calculate() {
+                let computation;
+                const prev = parseFloat(this.previousInput);
+                const current = parseFloat(this.currentInput);
+                
+                if (isNaN(prev) || isNaN(current)) return;
+
+                switch (this.operation) {
+                    case '+':
+                        computation = prev + current;
+                        break;
+                    case '-':
+                        computation = prev - current;
+                        break;
+                    case '*':
+                        computation = prev * current;
+                        break;
+                    case '/':
+                        if (current === 0) {
+                            this.currentInput = 'Error (Div by 0)';
+                            this.previousInput = '';
+                            this.operation = undefined;
+                            this.updateDisplay();
+                            return;
+                        }
+                        computation = prev / current;
+                        break;
+                    default:
+                        return;
+                }
+                this.currentInput = computation.toString();
+                this.operation = undefined;
+                this.previousInput = '';
+                this.updateDisplay();
+            }
+
+            updateDisplay() {
+                // Corrected display logic: Show previous, operation, and current input (second number)
+                if (this.operation != null && this.previousInput !== '') {
+                     this.displayElement.value = this.previousInput + ' ' + this.operation + ' ' + this.currentInput;
+                } else {
+                    this.displayElement.value = this.currentInput;
+                }
+               
+            }
+        }
+
+        const generalDisplay = document.getElementById('generalDisplay');
+        const generalCalculator = new Calculator(generalDisplay);
+
+
+        // --- TIME ZONE WIDGET LOGIC ---
+
+        const timeZones = {
+            'localTime': Intl.DateTimeFormat().resolvedOptions().timeZone,
+            'time-america/new_york': 'America/New_York',
+            'time-europe/london': 'Europe/London',
+            'time-europe/paris': 'Europe/Paris',
+            'time-asia/dubai': 'Asia/Dubai',
+            'time-asia/tokyo': 'Asia/Tokyo'
+        };
+
+        function updateClock(elementId, timezone) {
+            const now = new Date();
+            const options = { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit', 
+                hour12: false, 
+                timeZone: timezone 
+            };
+            
+            const formatter = new Intl.DateTimeFormat('en-US', options);
+            const timeString = formatter.format(now);
+            
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = timeString;
+            }
+        }
+
+        function updateAllClocks() {
+            for (const [id, timezone] of Object.entries(timeZones)) {
+                updateClock(id, timezone);
+            }
+        }
+
+        // --- DATE FORMAT WIDGET LOGIC ---
+
+        function updateDateFormats() {
+            const now = new Date();
+            
+            // US Format (MM/DD/YYYY)
+            const usOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const usDate = new Intl.DateTimeFormat('en-US', usOptions).format(now);
+            
+            // International Format (DD/MM/YYYY)
+            const intOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const intDate = new Intl.DateTimeFormat('en-GB', intOptions).format(now); // Using Great Britain locale for DD/MM/YYYY
+            
+            const usElement = document.getElementById('date-us');
+            const intElement = document.getElementById('date-int');
+
+            if (usElement) usElement.textContent = usDate;
+            if (intElement) intElement.textContent = intDate;
+        }
+
+
+        // Update clocks every second
+        setInterval(updateAllClocks, 1000); 
+        // Update date formats daily (or just once on load)
+        updateDateFormats(); 
+        
+    </script>
+</body>
+</html>
