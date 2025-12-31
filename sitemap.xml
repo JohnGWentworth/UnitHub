@@ -17,6 +17,11 @@
       <priority>0.80</priority>
    </url>
    <url>
+      <loc>https://unithub.org/game.html</loc>
+      <lastmod>2025-12-28</lastmod>
+      <priority>0.80</priority>
+   </url>
+   <url>
       <loc>https://unithub.org/about.html</loc>
       <lastmod>2025-12-28</lastmod>
       <priority>0.50</priority>
