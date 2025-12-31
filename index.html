@@ -10,21 +10,19 @@
      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9610577818327831"
      crossorigin="anonymous"></script>
 
-    <!-- Tailwind & Dark Mode Config -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-        }
-    </script>
 
     <style>
-        /* Custom styles */
-        .primary-color { color: #3b82f6; } 
-        .bg-primary { background-color: #3b82f6; }
+        /* Permanent Dark Theme Styles */
+        body { 
+            background-color: #111827; /* gray-900 */
+            color: #d1d5db; /* gray-300 */
+        }
         
-        /* Dark mode overrides for specific custom classes if needed */
-        .dark .bg-primary { background-color: #1e40af; } /* Darker blue in dark mode */
+        /* Adjusted Primary Color for Dark Mode Contrast */
+        .primary-color { color: #60a5fa; } /* blue-400 */
+        .bg-primary { background-color: #1e3a8a; } /* blue-900 */
         
         .input-group { display: flex; align-items: center; }
         .input-group input { flex-grow: 1; min-width: 0; }
@@ -49,14 +47,10 @@
 
         /* Print Optimization */
         @media print {
-            header, footer, .calculator-body, .time-zone-widget, .date-widget, nav, #darkModeToggle {
+            header, footer, .calculator-body, .time-zone-widget, .date-widget, nav {
                 display: none !important;
             }
             body {
-                background-color: white !important;
-                color: black !important;
-            }
-            .dark body {
                 background-color: white !important;
                 color: black !important;
             }
@@ -67,46 +61,32 @@
                 max-width: 100% !important;
                 padding: 0;
             }
+            /* Reset specific text colors for print */
+            th, td, h1, h2, p {
+                color: black !important;
+            }
         }
     </style>
-    
-    <!-- Dark Mode Init Script (Prevents flash of light content) -->
-    <script>
-        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    </script>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 min-h-screen font-sans transition-colors duration-200" onload="updateAllClocks(); updateDateFormats()">
+<body class="font-sans" onload="updateAllClocks(); updateDateFormats()">
     
     <!-- Header Section -->
-    <header class="bg-primary dark:bg-blue-900 text-white shadow-xl transition-colors duration-200">
+    <header class="bg-primary text-white shadow-xl border-b border-gray-700">
         <div class="max-w-4xl mx-auto p-4 md:p-6">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div>
-                    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
+                    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">
                         <a href="index.html" class="hover:underline">UnitHub</a>
                     </h1>
-                    <p class="text-gray-200 dark:text-gray-300 mt-1 text-sm md:text-base">Universal Calculator & Conversion Cheat Sheet</p>
+                    <p class="text-gray-300 mt-1 text-sm md:text-base">Universal Calculator & Conversion Cheat Sheet</p>
                 </div>
-                <!-- Navigation Bar & Toggle -->
-                <div class="flex items-center mt-4 md:mt-0 space-x-6">
-                    <nav>
-                        <ul class="flex space-x-6 text-lg font-semibold">
-                            <li><a href="index.html" class="hover:text-gray-200 border-b-2 border-white">Tools</a></li>
-                            <li><a href="blog.html" class="hover:text-gray-200 transition">Articles</a></li>
-                        </ul>
-                    </nav>
-                    <!-- Dark Mode Button -->
-                    <button id="darkModeToggle" onclick="toggleDarkMode()" class="p-2 rounded-lg bg-white/20 hover:bg-white/30 transition focus:outline-none" aria-label="Toggle Dark Mode">
-                        <!-- Sun Icon (Show in Dark) -->
-                        <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                        <!-- Moon Icon (Show in Light) -->
-                        <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    </button>
-                </div>
+                <!-- Navigation Bar -->
+                <nav class="mt-4 md:mt-0">
+                    <ul class="flex space-x-6 text-lg font-semibold">
+                        <li><a href="index.html" class="text-white hover:text-blue-200 border-b-2 border-blue-400">Tools</a></li>
+                        <li><a href="blog.html" class="text-gray-300 hover:text-white transition">Articles</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </header>
@@ -114,21 +94,21 @@
     <!-- Main Content Container -->
     <main class="max-w-4xl mx-auto px-4 mt-8">
         
-        <p class="text-lg text-gray-700 dark:text-gray-300 mb-8">This page combines a general calculator with five sections containing static conversion tables for quick reference, making **UnitHub.com** your definitive source.</p>
+        <p class="text-lg mb-8">This page combines a general calculator with five sections containing static conversion tables for quick reference, making **UnitHub.com** your definitive source.</p>
 
 
         <!-- 1. Length/Distance Conversion Table -->
-        <h2 class="text-2xl font-bold primary-color dark:text-blue-400 border-b dark:border-gray-700 pb-2 mb-4">Length & Distance (Tables)</h2>
-        <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl mb-10 transition-colors duration-200">
-            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm text-gray-900 dark:text-gray-100">
-                <thead>
+        <h2 class="text-2xl font-bold primary-color border-b border-gray-700 pb-2 mb-4">Length & Distance (Tables)</h2>
+        <div class="overflow-x-auto bg-gray-800 rounded-lg shadow-xl mb-10 border border-gray-700">
+            <table class="min-w-full divide-y divide-gray-700 text-sm">
+                <thead class="bg-gray-700">
                     <tr>
-                        <th class="px-4 py-3 text-left font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider rounded-tl-lg">Imperial Unit</th>
-                        <th class="px-4 py-3 text-center font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Exact Metric Equivalent</th>
-                        <th class="px-4 py-3 text-center font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Metric Unit</th>
+                        <th class="px-4 py-3 text-left font-medium text-gray-300 uppercase tracking-wider rounded-tl-lg">Imperial Unit</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-300 uppercase tracking-wider">Exact Metric Equivalent</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-300 uppercase tracking-wider">Metric Unit</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                <tbody class="divide-y divide-gray-700 text-gray-200">
                     <tr>
                         <td class="px-4 py-3 font-semibold">1 Inch (in)</td>
                         <td class="px-4 py-3 text-center">2.54</td>
@@ -144,12 +124,12 @@
                         <td class="px-4 py-3 text-center">1.60934</td>
                         <td class="px-4 py-3">Kilometers (km)</td>
                     </tr>
-                    <tr class="bg-gray-50 dark:bg-gray-700/50">
+                    <tr class="bg-gray-700/50">
                         <td class="px-4 py-3 font-semibold">1 Centimeter (cm)</td>
                         <td class="px-4 py-3 text-center">0.3937</td>
                         <td class="px-4 py-3">Inches (in)</td>
                     </tr>
-                    <tr class="bg-gray-50 dark:bg-gray-700/50">
+                    <tr class="bg-gray-700/50">
                         <td class="px-4 py-3 font-semibold">1 Kilometer (km)</td>
                         <td class="px-4 py-3 text-center">0.62137</td>
                         <td class="px-4 py-3">Miles (mi)</td>
@@ -159,19 +139,19 @@
         </div>
         
         <!-- Metric Prefixes Guide -->
-        <h2 class="text-2xl font-bold primary-color dark:text-blue-400 border-b dark:border-gray-700 pb-2 mb-4">Metric Prefixes (SI Multiples)</h2>
-        <p class="text-gray-700 dark:text-gray-300 mb-4">Understanding the prefix system is the key to converting between metric units.</p>
-        <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl mb-10 transition-colors duration-200">
-            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm text-gray-900 dark:text-gray-100">
-                <thead>
+        <h2 class="text-2xl font-bold primary-color border-b border-gray-700 pb-2 mb-4">Metric Prefixes (SI Multiples)</h2>
+        <p class="mb-4">Understanding the prefix system is the key to converting between metric units.</p>
+        <div class="overflow-x-auto bg-gray-800 rounded-lg shadow-xl mb-10 border border-gray-700">
+            <table class="min-w-full divide-y divide-gray-700 text-sm">
+                <thead class="bg-gray-700">
                     <tr>
-                        <th class="px-4 py-3 text-left font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider rounded-tl-lg">Prefix</th>
-                        <th class="px-4 py-3 text-center font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Symbol</th>
-                        <th class="px-4 py-3 text-center font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Multiplier</th>
-                        <th class="px-4 py-3 text-center font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Example</th>
+                        <th class="px-4 py-3 text-left font-medium text-gray-300 uppercase tracking-wider rounded-tl-lg">Prefix</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-300 uppercase tracking-wider">Symbol</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-300 uppercase tracking-wider">Multiplier</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-300 uppercase tracking-wider">Example</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                <tbody class="divide-y divide-gray-700 text-gray-200">
                     <tr>
                         <td class="px-4 py-3 font-semibold">Kilo</td>
                         <td class="px-4 py-3 text-center">k</td>
@@ -190,19 +170,19 @@
                         <td class="px-4 py-3 text-center">10</td>
                         <td class="px-4 py-3">1 Decameter (dam) = 10 Meters</td>
                     </tr>
-                    <tr class="bg-gray-50 dark:bg-gray-700/50">
+                    <tr class="bg-gray-700/50">
                         <td class="px-4 py-3 font-semibold">Deci</td>
                         <td class="px-4 py-3 text-center">d</td>
                         <td class="px-4 py-3 text-center">0.1</td>
                         <td class="px-4 py-3">1 Deciliter (dL) = 0.1 Liters</td>
                     </tr>
-                    <tr class="bg-gray-50 dark:bg-gray-700/50">
+                    <tr class="bg-gray-700/50">
                         <td class="px-4 py-3 font-semibold">Centi</td>
                         <td class="px-4 py-3 text-center">c</td>
                         <td class="px-4 py-3 text-center">0.01</td>
                         <td class="px-4 py-3">1 Centimeter (cm) = 0.01 Meters</td>
                     </tr>
-                    <tr class="bg-gray-50 dark:bg-gray-700/50">
+                    <tr class="bg-gray-700/50">
                         <td class="px-4 py-3 font-semibold">Milli</td>
                         <td class="px-4 py-3 text-center">m</td>
                         <td class="px-4 py-3 text-center">0.001</td>
@@ -213,17 +193,17 @@
         </div>
 
         <!-- Area Conversion Table -->
-        <h2 class="text-2xl font-bold primary-color dark:text-blue-400 border-b dark:border-gray-700 pb-2 mb-4">Area & Land Measurement (Tables)</h2>
-        <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl mb-10 transition-colors duration-200">
-            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm text-gray-900 dark:text-gray-100">
-                <thead>
+        <h2 class="text-2xl font-bold primary-color border-b border-gray-700 pb-2 mb-4">Area & Land Measurement (Tables)</h2>
+        <div class="overflow-x-auto bg-gray-800 rounded-lg shadow-xl mb-10 border border-gray-700">
+            <table class="min-w-full divide-y divide-gray-700 text-sm">
+                <thead class="bg-gray-700">
                     <tr>
-                        <th class="px-4 py-3 text-left font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider rounded-tl-lg">Imperial Unit</th>
-                        <th class="px-4 py-3 text-center font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Metric Equivalent</th>
-                        <th class="px-4 py-3 text-center font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Metric Unit</th>
+                        <th class="px-4 py-3 text-left font-medium text-gray-300 uppercase tracking-wider rounded-tl-lg">Imperial Unit</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-300 uppercase tracking-wider">Metric Equivalent</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-300 uppercase tracking-wider">Metric Unit</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                <tbody class="divide-y divide-gray-700 text-gray-200">
                     <tr>
                         <td class="px-4 py-3 font-semibold">1 Square Foot (ft&sup2;)</td>
                         <td class="px-4 py-3 text-center">0.0929</td>
@@ -239,12 +219,12 @@
                         <td class="px-4 py-3 text-center">2.590</td>
                         <td class="px-4 py-3">Square Kilometers (km&sup2;)</td>
                     </tr>
-                    <tr class="bg-gray-50 dark:bg-gray-700/50">
+                    <tr class="bg-gray-700/50">
                         <td class="px-4 py-3 font-semibold">1 Hectare (ha)</td>
                         <td class="px-4 py-3 text-center">2.471</td>
                         <td class="px-4 py-3">Acres (ac)</td>
                     </tr>
-                    <tr class="bg-gray-50 dark:bg-gray-700/50">
+                    <tr class="bg-gray-700/50">
                         <td class="px-4 py-3 font-semibold">1 Square Meter (m&sup2;)</td>
                         <td class="px-4 py-3 text-center">10.764</td>
                         <td class="px-4 py-3">Square Feet (ft&sup2;)</td>
@@ -254,17 +234,17 @@
         </div>
 
         <!-- Mass/Weight Conversion Table -->
-        <h2 class="text-2xl font-bold primary-color dark:text-blue-400 border-b dark:border-gray-700 pb-2 mb-4">Weight & Mass (Tables)</h2>
-        <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl mb-10 transition-colors duration-200">
-            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm text-gray-900 dark:text-gray-100">
-                <thead>
+        <h2 class="text-2xl font-bold primary-color border-b border-gray-700 pb-2 mb-4">Weight & Mass (Tables)</h2>
+        <div class="overflow-x-auto bg-gray-800 rounded-lg shadow-xl mb-10 border border-gray-700">
+            <table class="min-w-full divide-y divide-gray-700 text-sm">
+                <thead class="bg-gray-700">
                     <tr>
-                        <th class="px-4 py-3 text-left font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider rounded-tl-lg">Imperial Unit</th>
-                        <th class="px-4 py-3 text-center font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Exact Metric Equivalent</th>
-                        <th class="px-4 py-3 text-center font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Metric Unit</th>
+                        <th class="px-4 py-3 text-left font-medium text-gray-300 uppercase tracking-wider rounded-tl-lg">Imperial Unit</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-300 uppercase tracking-wider">Exact Metric Equivalent</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-300 uppercase tracking-wider">Metric Unit</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                <tbody class="divide-y divide-gray-700 text-gray-200">
                     <tr>
                         <td class="px-4 py-3 font-semibold">1 Ounce (oz)</td>
                         <td class="px-4 py-3 text-center">28.3495</td>
@@ -275,12 +255,12 @@
                         <td class="px-4 py-3 text-center">0.45359</td>
                         <td class="px-4 py-3">Kilograms (kg)</td>
                     </tr>
-                    <tr class="bg-gray-50 dark:bg-gray-700/50">
+                    <tr class="bg-gray-700/50">
                         <td class="px-4 py-3 font-semibold">1 Gram (g)</td>
                         <td class="px-4 py-3 text-center">0.03527</td>
                         <td class="px-4 py-3">Ounces (oz)</td>
                     </tr>
-                    <tr class="bg-gray-50 dark:bg-gray-700/50">
+                    <tr class="bg-gray-700/50">
                         <td class="px-4 py-3 font-semibold">1 Kilogram (kg)</td>
                         <td class="px-4 py-3 text-center">2.20462</td>
                         <td class="px-4 py-3">Pounds (lb)</td>
@@ -290,16 +270,16 @@
         </div>
 
         <!-- Temperature Conversion Table -->
-        <h2 class="text-2xl font-bold primary-color dark:text-blue-400 border-b dark:border-gray-700 pb-2 mb-4">Temperature (Tables)</h2>
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl mb-10 transition-colors duration-200">
-            <p class="text-gray-700 dark:text-gray-300 mb-4">Temperature is often the most confusing conversion. Here are the simple formulas:</p>
-            <ul class="list-disc list-inside ml-4 space-y-2 text-gray-800 dark:text-gray-200">
+        <h2 class="text-2xl font-bold primary-color border-b border-gray-700 pb-2 mb-4">Temperature (Tables)</h2>
+        <div class="bg-gray-800 p-6 rounded-lg shadow-xl mb-10 border border-gray-700">
+            <p class="mb-4">Temperature is often the most confusing conversion. Here are the simple formulas:</p>
+            <ul class="list-disc list-inside ml-4 space-y-2 text-gray-200">
                 <li class="font-semibold">Fahrenheit to Celsius: C = (F - 32) * 5 / 9</li>
                 <li class="font-semibold">Celsius to Fahrenheit: F = (C * 9 / 5) + 32</li>
             </ul>
-            <div class="mt-4 bg-blue-50 dark:bg-gray-700 p-3 rounded-md">
-                <p class="font-bold text-blue-700 dark:text-blue-300">Key Reference Points:</p>
-                <ul class="list-disc list-inside ml-4 text-sm text-gray-800 dark:text-gray-200">
+            <div class="mt-4 bg-gray-700 p-3 rounded-md">
+                <p class="font-bold text-blue-400">Key Reference Points:</p>
+                <ul class="list-disc list-inside ml-4 text-sm text-gray-200">
                     <li>Freezing Point of Water: 0&deg;C (32&deg;F)</li>
                     <li>Boiling Point of Water: 100&deg;C (212&deg;F)</li>
                     <li>Room Temperature (~70&deg;F): &asymp; 21&deg;C</li>
@@ -308,17 +288,17 @@
         </div>
 
         <!-- Volume Conversion Table -->
-        <h2 class="text-2xl font-bold primary-color dark:text-blue-400 border-b dark:border-gray-700 pb-2 mb-4">Volume (Tables)</h2>
-        <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl mb-10 transition-colors duration-200">
-            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm text-gray-900 dark:text-gray-100">
-                <thead>
+        <h2 class="text-2xl font-bold primary-color border-b border-gray-700 pb-2 mb-4">Volume (Tables)</h2>
+        <div class="overflow-x-auto bg-gray-800 rounded-lg shadow-xl mb-10 border border-gray-700">
+            <table class="min-w-full divide-y divide-gray-700 text-sm">
+                <thead class="bg-gray-700">
                     <tr>
-                        <th class="px-4 py-3 text-left font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider rounded-tl-lg">Imperial (US) Unit</th>
-                        <th class="px-4 py-3 text-center font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Exact Metric Equivalent</th>
-                        <th class="px-4 py-3 text-center font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Metric Unit</th>
+                        <th class="px-4 py-3 text-left font-medium text-gray-300 uppercase tracking-wider rounded-tl-lg">Imperial (US) Unit</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-300 uppercase tracking-wider">Exact Metric Equivalent</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-300 uppercase tracking-wider">Metric Unit</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                <tbody class="divide-y divide-gray-700 text-gray-200">
                     <tr>
                         <td class="px-4 py-3 font-semibold">1 Fluid Ounce (fl oz)</td>
                         <td class="px-4 py-3 text-center">29.5735</td>
@@ -334,12 +314,12 @@
                         <td class="px-4 py-3 text-center">3.78541</td>
                         <td class="px-4 py-3">Liters (L)</td>
                     </tr>
-                    <tr class="bg-gray-50 dark:bg-gray-700/50">
+                    <tr class="bg-gray-700/50">
                         <td class="px-4 py-3 font-semibold">1 Milliliter (mL)</td>
                         <td class="px-4 py-3 text-center">0.03381</td>
                         <td class="px-4 py-3">Fluid Ounces (fl oz)</td>
                     </tr>
-                    <tr class="bg-gray-50 dark:bg-gray-700/50">
+                    <tr class="bg-gray-700/50">
                         <td class="px-4 py-3 font-semibold">1 Liter (L)</td>
                         <td class="px-4 py-3 text-center">1.05669</td>
                         <td class="px-4 py-3">Quarts (qt)</td>
@@ -349,18 +329,18 @@
         </div>
         
         <!-- Cooking Volume Table -->
-        <h2 class="text-2xl font-bold primary-color dark:text-blue-400 border-b dark:border-gray-700 pb-2 mb-4">Cooking Volume (US vs. Imperial/UK)</h2>
-        <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl mb-10 transition-colors duration-200">
-            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm text-gray-900 dark:text-gray-100">
-                <thead>
+        <h2 class="text-2xl font-bold primary-color border-b border-gray-700 pb-2 mb-4">Cooking Volume (US vs. Imperial/UK)</h2>
+        <div class="overflow-x-auto bg-gray-800 rounded-lg shadow-xl mb-10 border border-gray-700">
+            <table class="min-w-full divide-y divide-gray-700 text-sm">
+                <thead class="bg-gray-700">
                     <tr>
-                        <th class="px-4 py-3 text-left font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider rounded-tl-lg">Unit</th>
-                        <th class="px-4 py-3 text-center font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">US Fluid Ounce (fl oz)</th>
-                        <th class="px-4 py-3 text-center font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Imperial (UK) Fluid Ounce (fl oz)</th>
-                        <th class="px-4 py-3 text-center font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Difference Factor</th>
+                        <th class="px-4 py-3 text-left font-medium text-gray-300 uppercase tracking-wider rounded-tl-lg">Unit</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-300 uppercase tracking-wider">US Fluid Ounce (fl oz)</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-300 uppercase tracking-wider">Imperial (UK) Fluid Ounce (fl oz)</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-300 uppercase tracking-wider">Difference Factor</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                <tbody class="divide-y divide-gray-700 text-gray-200">
                     <tr>
                         <td class="px-4 py-3 font-semibold">1 fl oz</td>
                         <td class="px-4 py-3 text-center">29.57 mL</td>
@@ -371,35 +351,35 @@
                         <td class="px-4 py-3 font-semibold">1 Pint (pt)</td>
                         <td class="px-4 py-3 text-center">473.18 mL</td>
                         <td class="px-4 py-3 text-center">568.26 mL</td>
-                        <td class="px-4 py-3 text-center font-bold text-red-600 dark:text-red-400">~20% Larger (UK)</td>
+                        <td class="px-4 py-3 text-center font-bold text-red-400">~20% Larger (UK)</td>
                     </tr>
                     <tr>
                         <td class="px-4 py-3 font-semibold">1 Gallon (gal)</td>
                         <td class="px-4 py-3 text-center">3.785 L</td>
                         <td class="px-4 py-3 text-center">4.546 L</td>
-                        <td class="px-4 py-3 text-center font-bold text-red-600 dark:text-red-400">~20% Larger (UK)</td>
+                        <td class="px-4 py-3 text-center font-bold text-red-400">~20% Larger (UK)</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <!-- Shoe Sizing -->
-        <h2 class="text-2xl font-bold primary-color dark:text-blue-400 border-b dark:border-gray-700 pb-2 mb-4">Specialized Conversions (Shoe Sizing)</h2>
+        <h2 class="text-2xl font-bold primary-color border-b border-gray-700 pb-2 mb-4">Specialized Conversions (Shoe Sizing)</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
             <!-- Men's Shoe Sizes -->
-            <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl transition-colors duration-200">
-                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm text-gray-900 dark:text-gray-100">
+            <div class="overflow-x-auto bg-gray-800 rounded-lg shadow-xl border border-gray-700">
+                <table class="min-w-full divide-y divide-gray-700 text-sm">
                     <thead>
                         <tr>
-                            <th colspan="3" class="px-4 py-3 text-white bg-blue-400 dark:bg-blue-600 font-medium uppercase tracking-wider rounded-t-lg">Men's Shoe Sizing</th>
+                            <th colspan="3" class="px-4 py-3 text-white bg-blue-600 font-medium uppercase tracking-wider rounded-t-lg">Men's Shoe Sizing</th>
                         </tr>
                         <tr>
-                            <th class="px-4 py-3 text-left text-gray-600 dark:text-gray-400 uppercase">US</th>
-                            <th class="px-4 py-3 text-center text-gray-600 dark:text-gray-400 uppercase">EU</th>
-                            <th class="px-4 py-3 text-center text-gray-600 dark:text-gray-400 uppercase">UK</th>
+                            <th class="px-4 py-3 text-left text-gray-400 uppercase">US</th>
+                            <th class="px-4 py-3 text-center text-gray-400 uppercase">EU</th>
+                            <th class="px-4 py-3 text-center text-gray-400 uppercase">UK</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                    <tbody class="divide-y divide-gray-700 text-gray-200">
                         <tr><td class="px-4 py-2 font-semibold">7</td><td class="px-4 py-2 text-center">40</td><td class="px-4 py-2 text-center">6.5</td></tr>
                         <tr><td class="px-4 py-2 font-semibold">8</td><td class="px-4 py-2 text-center">41</td><td class="px-4 py-2 text-center">7.5</td></tr>
                         <tr><td class="px-4 py-2 font-semibold">9</td><td class="px-4 py-2 text-center">42</td><td class="px-4 py-2 text-center">8.5</td></tr>
@@ -410,19 +390,19 @@
             </div>
 
             <!-- Women's Shoe Sizes -->
-            <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl transition-colors duration-200">
-                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm text-gray-900 dark:text-gray-100">
+            <div class="overflow-x-auto bg-gray-800 rounded-lg shadow-xl border border-gray-700">
+                <table class="min-w-full divide-y divide-gray-700 text-sm">
                     <thead>
                         <tr>
-                            <th colspan="3" class="px-4 py-3 text-white bg-blue-400 dark:bg-blue-600 font-medium uppercase tracking-wider rounded-t-lg">Women's Shoe Sizing</th>
+                            <th colspan="3" class="px-4 py-3 text-white bg-blue-600 font-medium uppercase tracking-wider rounded-t-lg">Women's Shoe Sizing</th>
                         </tr>
                         <tr>
-                            <th class="px-4 py-3 text-left text-gray-600 dark:text-gray-400 uppercase">US</th>
-                            <th class="px-4 py-3 text-center text-gray-600 dark:text-gray-400 uppercase">EU</th>
-                            <th class="px-4 py-3 text-center text-gray-600 dark:text-gray-400 uppercase">UK</th>
+                            <th class="px-4 py-3 text-left text-gray-400 uppercase">US</th>
+                            <th class="px-4 py-3 text-center text-gray-400 uppercase">EU</th>
+                            <th class="px-4 py-3 text-center text-gray-400 uppercase">UK</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                    <tbody class="divide-y divide-gray-700 text-gray-200">
                         <tr><td class="px-4 py-2 font-semibold">6</td><td class="px-4 py-2 text-center">36-37</td><td class="px-4 py-2 text-center">4</td></tr>
                         <tr><td class="px-4 py-2 font-semibold">7</td><td class="px-4 py-2 text-center">37-38</td><td class="px-4 py-2 text-center">5</td></tr>
                         <tr><td class="px-4 py-2 text-semibold">8</td><td class="px-4 py-2 text-center">38-39</td><td class="px-4 py-2 text-center">6</td></tr>
@@ -434,89 +414,77 @@
         </div>
 
         <!-- Time Zone Widget -->
-        <h2 class="text-2xl font-bold primary-color dark:text-blue-400 border-b dark:border-gray-700 pb-2 mb-4 time-zone-widget">Global Time Zone Comparison</h2>
-        <div class="bg-blue-50 dark:bg-gray-800 p-6 rounded-lg shadow-inner mb-6 time-zone-widget transition-colors duration-200">
-            <p class="text-gray-700 dark:text-gray-300 mb-4">See the current time in major international travel hubs.</p>
+        <h2 class="text-2xl font-bold primary-color border-b border-gray-700 pb-2 mb-4 time-zone-widget">Global Time Zone Comparison</h2>
+        <div class="bg-gray-800 p-6 rounded-lg shadow-inner mb-6 time-zone-widget border border-gray-700">
+            <p class="mb-4">See the current time in major international travel hubs.</p>
             <div class="grid grid-cols-2 gap-4 text-sm font-mono" id="time-zone-display">
-                <div class="bg-white dark:bg-gray-700 p-3 rounded shadow"><p class="font-bold dark:text-gray-200">Your Local Time:</p><span id="localTime" class="text-lg dark:text-blue-300"></span></div>
-                <div class="bg-white dark:bg-gray-700 p-3 rounded shadow"><p class="font-bold dark:text-gray-200">New York (EST):</p><span id="time-america/new_york" class="text-lg dark:text-blue-300"></span></div>
-                <div class="bg-white dark:bg-gray-700 p-3 rounded shadow"><p class="font-bold dark:text-gray-200">London (GMT):</p><span id="time-europe/london" class="text-lg dark:text-blue-300"></span></div>
-                <div class="bg-white dark:bg-gray-700 p-3 rounded shadow"><p class="font-bold dark:text-gray-200">Paris (CET):</p><span id="time-europe/paris" class="text-lg dark:text-blue-300"></span></div>
-                <div class="bg-white dark:bg-gray-700 p-3 rounded shadow"><p class="font-bold dark:text-gray-200">Dubai (GST):</p><span id="time-asia/dubai" class="text-lg dark:text-blue-300"></span></div>
-                <div class="bg-white dark:bg-gray-700 p-3 rounded shadow"><p class="font-bold dark:text-gray-200">Tokyo (JST):</p><span id="time-asia/tokyo" class="text-lg dark:text-blue-300"></span></div>
+                <div class="bg-gray-700 p-3 rounded shadow"><p class="font-bold text-gray-300">Your Local Time:</p><span id="localTime" class="text-lg text-blue-300"></span></div>
+                <div class="bg-gray-700 p-3 rounded shadow"><p class="font-bold text-gray-300">New York (EST):</p><span id="time-america/new_york" class="text-lg text-blue-300"></span></div>
+                <div class="bg-gray-700 p-3 rounded shadow"><p class="font-bold text-gray-300">London (GMT):</p><span id="time-europe/london" class="text-lg text-blue-300"></span></div>
+                <div class="bg-gray-700 p-3 rounded shadow"><p class="font-bold text-gray-300">Paris (CET):</p><span id="time-europe/paris" class="text-lg text-blue-300"></span></div>
+                <div class="bg-gray-700 p-3 rounded shadow"><p class="font-bold text-gray-300">Dubai (GST):</p><span id="time-asia/dubai" class="text-lg text-blue-300"></span></div>
+                <div class="bg-gray-700 p-3 rounded shadow"><p class="font-bold text-gray-300">Tokyo (JST):</p><span id="time-asia/tokyo" class="text-lg text-blue-300"></span></div>
             </div>
         </div>
 
         <!-- Date Format Widget -->
-        <h2 class="text-2xl font-bold primary-color dark:text-blue-400 border-b dark:border-gray-700 pb-2 mb-4 date-widget">Date Format Comparison</h2>
-        <div class="bg-blue-50 dark:bg-gray-800 p-6 rounded-lg shadow-inner mb-10 date-widget transition-colors duration-200">
-             <p class="text-gray-700 dark:text-gray-300 mb-4">Avoid confusion when entering dates online.</p>
+        <h2 class="text-2xl font-bold primary-color border-b border-gray-700 pb-2 mb-4 date-widget">Date Format Comparison</h2>
+        <div class="bg-gray-800 p-6 rounded-lg shadow-inner mb-10 date-widget border border-gray-700">
+             <p class="mb-4">Avoid confusion when entering dates online.</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-mono" id="date-format-display">
-                <div class="bg-white dark:bg-gray-700 p-3 rounded shadow"><p class="font-bold dark:text-gray-200">US Format (MM/DD/YYYY):</p><span id="date-us" class="text-lg dark:text-blue-300"></span></div>
-                <div class="bg-white dark:bg-gray-700 p-3 rounded shadow"><p class="font-bold dark:text-gray-200">International Format (DD/MM/YYYY):</p><span id="date-int" class="text-lg dark:text-blue-300"></span></div>
+                <div class="bg-gray-700 p-3 rounded shadow"><p class="font-bold text-gray-300">US Format (MM/DD/YYYY):</p><span id="date-us" class="text-lg text-blue-300"></span></div>
+                <div class="bg-gray-700 p-3 rounded shadow"><p class="font-bold text-gray-300">International Format (DD/MM/YYYY):</p><span id="date-int" class="text-lg text-blue-300"></span></div>
             </div>
         </div>
         
         <!-- General Arithmetic Calculator Body -->
-        <h2 class="text-2xl font-bold primary-color dark:text-blue-400 border-b dark:border-gray-700 pb-2 mb-4">General Arithmetic Calculator</h2>
-        <div class="calculator-body bg-white dark:bg-gray-800 p-6 rounded-xl shadow-2xl w-full max-w-sm mx-auto mb-10 transition-colors duration-200">
+        <h2 class="text-2xl font-bold primary-color border-b border-gray-700 pb-2 mb-4">General Arithmetic Calculator</h2>
+        <div class="calculator-body bg-gray-800 p-6 rounded-xl shadow-2xl w-full max-w-sm mx-auto mb-10 border border-gray-700">
             
             <!-- Display -->
-            <input type="text" id="generalDisplay" class="w-full text-right text-4xl mb-4 p-4 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white font-mono" readonly value="0">
+            <input type="text" id="generalDisplay" class="w-full text-right text-4xl mb-4 p-4 border-2 border-gray-600 rounded-lg bg-gray-700 text-white font-mono" readonly value="0">
             
             <!-- Buttons Grid -->
             <div class="calculator-grid">
                 
                 <!-- Row 1 -->
-                <button class="btn bg-red-500 hover:bg-red-600 text-white span-2" onclick="generalCalculator.clear()">AC</button>
-                <button class="btn bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-white" onclick="generalCalculator.chooseOperation('/')">/</button>
-                <button class="btn bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-white" onclick="generalCalculator.chooseOperation('*')">*</button>
+                <button class="btn bg-red-600 hover:bg-red-700 text-white span-2" onclick="generalCalculator.clear()">AC</button>
+                <button class="btn bg-gray-600 hover:bg-gray-500 text-white" onclick="generalCalculator.chooseOperation('/')">/</button>
+                <button class="btn bg-gray-600 hover:bg-gray-500 text-white" onclick="generalCalculator.chooseOperation('*')">*</button>
 
                 <!-- Row 2 -->
-                <button class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white" onclick="generalCalculator.appendNumber(7)">7</button>
-                <button class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white" onclick="generalCalculator.appendNumber(8)">8</button>
-                <button class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white" onclick="generalCalculator.appendNumber(9)">9</button>
-                <button class="btn bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-white" onclick="generalCalculator.chooseOperation('-')">-</button>
+                <button class="btn bg-gray-700 hover:bg-gray-600 text-white" onclick="generalCalculator.appendNumber(7)">7</button>
+                <button class="btn bg-gray-700 hover:bg-gray-600 text-white" onclick="generalCalculator.appendNumber(8)">8</button>
+                <button class="btn bg-gray-700 hover:bg-gray-600 text-white" onclick="generalCalculator.appendNumber(9)">9</button>
+                <button class="btn bg-gray-600 hover:bg-gray-500 text-white" onclick="generalCalculator.chooseOperation('-')">-</button>
                 
                 <!-- Row 3 -->
-                <button class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white" onclick="generalCalculator.appendNumber(4)">4</button>
-                <button class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white" onclick="generalCalculator.appendNumber(5)">5</button>
-                <button class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white" onclick="generalCalculator.appendNumber(6)">6</button>
-                <button class="btn bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-white" onclick="generalCalculator.chooseOperation('+')">+</button>
+                <button class="btn bg-gray-700 hover:bg-gray-600 text-white" onclick="generalCalculator.appendNumber(4)">4</button>
+                <button class="btn bg-gray-700 hover:bg-gray-600 text-white" onclick="generalCalculator.appendNumber(5)">5</button>
+                <button class="btn bg-gray-700 hover:bg-gray-600 text-white" onclick="generalCalculator.appendNumber(6)">6</button>
+                <button class="btn bg-gray-600 hover:bg-gray-500 text-white" onclick="generalCalculator.chooseOperation('+')">+</button>
 
                 <!-- Row 4 -->
-                <button class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white" onclick="generalCalculator.appendNumber(1)">1</button>
-                <button class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white" onclick="generalCalculator.appendNumber(2)">2</button>
-                <button class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white" onclick="generalCalculator.appendNumber(3)">3</button>
-                <button class="btn bg-primary hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 text-white row-span-2" onclick="generalCalculator.calculate()">=</button>
+                <button class="btn bg-gray-700 hover:bg-gray-600 text-white" onclick="generalCalculator.appendNumber(1)">1</button>
+                <button class="btn bg-gray-700 hover:bg-gray-600 text-white" onclick="generalCalculator.appendNumber(2)">2</button>
+                <button class="btn bg-gray-700 hover:bg-gray-600 text-white" onclick="generalCalculator.appendNumber(3)">3</button>
+                <button class="btn bg-blue-600 hover:bg-blue-500 text-white row-span-2" onclick="generalCalculator.calculate()">=</button>
 
                 <!-- Row 5 -->
-                <button class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white span-2" onclick="generalCalculator.appendNumber(0)">0</button>
-                <button class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white" onclick="generalCalculator.appendNumber('.')">.</button>
+                <button class="btn bg-gray-700 hover:bg-gray-600 text-white span-2" onclick="generalCalculator.appendNumber(0)">0</button>
+                <button class="btn bg-gray-700 hover:bg-gray-600 text-white" onclick="generalCalculator.appendNumber('.')">.</button>
                 
             </div>
         </div>
 
-        <footer class="mt-12 pt-6 border-t border-gray-300 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
+        <footer class="mt-12 pt-6 border-t border-gray-700 text-center text-sm text-gray-400">
             <p>Data last verified: December 2025. All conversion factors are based on internationally accepted standards.</p>
         </footer>
 
     </main>
 
-    <!-- JavaScript for Calculator Logic, Time Zone Widget, and Dark Mode Toggle -->
+    <!-- JavaScript for Calculator Logic and Time Zone Widget -->
     <script>
-        
-        // --- DARK MODE LOGIC ---
-        function toggleDarkMode() {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('color-theme', 'light');
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('color-theme', 'dark');
-            }
-        }
-
         // --- ARITHMETIC CALCULATOR CLASS ---
         class Calculator {
             constructor(displayElement) {
