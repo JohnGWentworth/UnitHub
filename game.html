@@ -49,21 +49,22 @@
             const localScores = JSON.parse(localStorage.getItem('unitBlitzScores')) || [];
             localScores.push({ name, score, date: new Date().toISOString() });
             localScores.sort((a, b) => b.score - a.score); // Sort High to Low
-            localStorage.setItem('unitBlitzScores', JSON.stringify(localScores.slice(0, 10))); // Keep top 10
+            localStorage.setItem('unitBlitzScores', JSON.stringify(localScores.slice(0, 10))); // Keep top 10 stored
 
             // 2. Save to Firebase (Only if active)
             if (isFirebaseActive && db) {
                 // Firebase logic here (placeholder for future)
             }
             
-            // Refresh Display
-            renderLeaderboard(localScores.slice(0, 10));
+            // Refresh Display (Show Top 3)
+            renderLeaderboard(localScores.slice(0, 3));
         }
 
         function loadLeaderboard() {
             // Load Local Scores
             const localScores = JSON.parse(localStorage.getItem('unitBlitzScores')) || [];
-            renderLeaderboard(localScores);
+            // Show Top 3
+            renderLeaderboard(localScores.slice(0, 3));
         }
 
         function renderLeaderboard(scores) {
@@ -82,13 +83,16 @@
 
             scores.forEach((entry, index) => {
                 const isTop3 = index < 3 ? "text-yellow-400 font-bold" : "text-gray-300";
-                const row = `
-                    <li class="flex justify-between items-center bg-gray-700/50 p-3 rounded mb-2 border border-gray-600">
-                        <span class="${isTop3}">#${index + 1} ${entry.name}</span>
-                        <span class="font-mono text-blue-400">${entry.score} pts</span>
-                    </li>
-                `;
-                list.innerHTML += row;
+                // Only render if within top 3 (extra safety check)
+                if (index < 3) {
+                    const row = `
+                        <li class="flex justify-between items-center bg-gray-700/50 p-3 rounded mb-2 border border-gray-600">
+                            <span class="${isTop3}">#${index + 1} ${entry.name}</span>
+                            <span class="font-mono text-blue-400">${entry.score} pts</span>
+                        </li>
+                    `;
+                    list.innerHTML += row;
+                }
             });
         }
 
@@ -157,7 +161,7 @@
 
             <!-- Leaderboard Preview -->
             <div class="mt-8 pt-8 border-t border-gray-700 text-left">
-                <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Your Top Scores (Local)</h3>
+                <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Top 3 Scores (Local)</h3>
                 <ul id="leaderboard-list" class="text-sm space-y-2">
                     <li class="text-gray-600">Loading scores...</li>
                 </ul>
