@@ -228,6 +228,7 @@
         let timeLeft = 60;
         let timerInterval = null;
         let currentCorrectOption = ''; 
+        let isProcessing = false; // Flag to prevent spam clicking
 
         // Conversion Logic
         const generators = [
@@ -273,9 +274,13 @@
             document.getElementById('game-screen').classList.remove('hidden');
             score = 0;
             timeLeft = 60;
+            isProcessing = false;
             updateHUD();
             nextQuestion();
             
+            // Clear any existing intervals to prevent multiple timers
+            if (timerInterval) clearInterval(timerInterval);
+
             timerInterval = setInterval(() => {
                 timeLeft--;
                 updateHUD();
@@ -342,6 +347,11 @@
         }
 
         function handleChoice(choice) {
+            // Prevent spam clicking or interactions after game over
+            if (isProcessing || timeLeft <= 0) return;
+            
+            isProcessing = true; // Lock input
+
             const cardA = document.getElementById('card-a');
             const cardB = document.getElementById('card-b');
 
@@ -352,6 +362,7 @@
                 
                 setTimeout(() => {
                     nextQuestion();
+                    isProcessing = false; // Unlock input
                 }, 200);
             } else {
                 timeLeft -= 5; 
@@ -363,6 +374,7 @@
                 
                 setTimeout(() => {
                     nextQuestion();
+                    isProcessing = false; // Unlock input
                 }, 200);
             }
         }
