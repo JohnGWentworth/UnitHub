@@ -5,38 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Ultimate Guide to Shoe Sizing: US vs. UK vs. EU - UnitHub</title>
     <meta name="description" content="A comprehensive guide to understanding the differences between US, UK, and European shoe sizes. Learn why they differ and how to convert accurately.">
-    <!-- Load Tailwind CSS -->
+    <!-- Google Ads -->
      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9610577818327831"
      crossorigin="anonymous"></script>
+
+    <!-- Tailwind & Dark Mode Config -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
     <style>
         .bg-primary { background-color: #3b82f6; }
         .text-primary { color: #3b82f6; }
-        /* Typography for Article Readability */
-        article p { margin-bottom: 1.5rem; line-height: 1.8; color: #374151; font-size: 1.125rem; }
+        .dark .bg-primary { background-color: #1e40af; }
+        .dark .text-primary { color: #60a5fa; }
+
+        /* Typography */
+        article p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.125rem; }
+        /* Light mode text */
+        article p, article li { color: #374151; } 
         article h2 { font-size: 1.875rem; font-weight: 700; color: #1f2937; margin-top: 2.5rem; margin-bottom: 1rem; }
         article h3 { font-size: 1.5rem; font-weight: 600; color: #1f2937; margin-top: 2rem; margin-bottom: 0.75rem; }
+        article li { margin-bottom: 0.75rem; }
+
+        /* Dark Mode Text Overrides */
+        .dark article p, .dark article li { color: #d1d5db; }
+        .dark article h1, .dark article h2, .dark article h3 { color: #f3f4f6; }
+        .dark article strong { color: #fff; }
     </style>
+    
+    <!-- Dark Mode Init Script -->
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
 </head>
-<body class="bg-gray-100 min-h-screen font-sans">
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen font-sans transition-colors duration-200">
     
     <!-- Header Section -->
-    <header class="bg-primary text-white shadow-xl">
+    <header class="bg-primary dark:bg-blue-900 text-white shadow-xl transition-colors duration-200">
         <div class="max-w-4xl mx-auto p-4 md:p-6">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div>
                     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
                         <a href="../index.html" class="hover:underline">UnitHub</a>
                     </h1>
-                    <p class="text-gray-200 mt-1 text-sm md:text-base">Universal Calculator & Conversion Cheat Sheet</p>
+                    <p class="text-gray-200 dark:text-gray-300 mt-1 text-sm md:text-base">Universal Calculator & Conversion Cheat Sheet</p>
                 </div>
-                <!-- Navigation Bar -->
-                <nav class="mt-4 md:mt-0">
-                    <ul class="flex space-x-6 text-lg font-semibold">
-                        <li><a href="../index.html" class="hover:text-gray-200 transition">Tools</a></li>
-                        <li><a href="../blog.html" class="hover:text-gray-200 border-b-2 border-white">Articles</a></li>
-                    </ul>
-                </nav>
+                <!-- Navigation & Toggle -->
+                <div class="flex items-center mt-4 md:mt-0 space-x-6">
+                    <nav>
+                        <ul class="flex space-x-6 text-lg font-semibold">
+                            <li><a href="../index.html" class="hover:text-gray-200 transition">Tools</a></li>
+                            <li><a href="../blog.html" class="hover:text-gray-200 border-b-2 border-white">Articles</a></li>
+                        </ul>
+                    </nav>
+                    <!-- Dark Mode Button -->
+                    <button id="darkModeToggle" onclick="toggleDarkMode()" class="p-2 rounded-lg bg-white/20 hover:bg-white/30 transition focus:outline-none" aria-label="Toggle Dark Mode">
+                         <!-- Sun Icon (Show in Dark) -->
+                         <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                         <!-- Moon Icon (Show in Light) -->
+                         <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
@@ -44,11 +80,11 @@
     <!-- Main Content Container -->
     <main class="max-w-3xl mx-auto px-4 mt-10 mb-16">
         
-        <article class="bg-white p-8 md:p-12 rounded-lg shadow-xl">
-            <header class="mb-10 border-b pb-8">
-                <span class="text-sm font-bold text-primary uppercase tracking-wider">Lifestyle & Fashion</span>
-                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mt-2 mb-4">The Ultimate Guide to Shoe Sizing: US, UK, and EU Explained</h1>
-                <div class="text-gray-500 text-sm">
+        <article class="bg-white dark:bg-gray-800 p-8 md:p-12 rounded-lg shadow-xl transition-colors duration-200">
+            <header class="mb-10 border-b dark:border-gray-700 pb-8">
+                <span class="text-sm font-bold text-primary dark:text-blue-400 uppercase tracking-wider">Lifestyle & Fashion</span>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mt-2 mb-4">The Ultimate Guide to Shoe Sizing: US, UK, and EU Explained</h1>
+                <div class="text-gray-500 dark:text-gray-400 text-sm">
                     Published: December 2025 &bull; 4 min read
                 </div>
             </header>
@@ -85,16 +121,16 @@
                 While there is no perfectly linear formula because manufacturers vary, these are the generally accepted standard conversions used by major brands like Nike, Adidas, and Clarks.
             </p>
 
-            <div class="my-8 overflow-x-auto bg-gray-50 rounded-lg border border-gray-200">
-                <table class="min-w-full divide-y divide-gray-300 text-sm text-center">
-                    <thead class="bg-gray-100">
+            <div class="my-8 overflow-x-auto bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-700">
+                <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-600 text-sm text-center">
+                    <thead class="bg-gray-100 dark:bg-gray-700">
                         <tr>
-                            <th class="px-4 py-3 font-bold text-gray-700">US Men's</th>
-                            <th class="px-4 py-3 font-bold text-gray-700">UK Men's</th>
-                            <th class="px-4 py-3 font-bold text-gray-700">EU Size</th>
+                            <th class="px-4 py-3 font-bold text-gray-700 dark:text-gray-200">US Men's</th>
+                            <th class="px-4 py-3 font-bold text-gray-700 dark:text-gray-200">UK Men's</th>
+                            <th class="px-4 py-3 font-bold text-gray-700 dark:text-gray-200">EU Size</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-200">
+                    <tbody class="divide-y divide-gray-200 dark:divide-gray-600 text-gray-800 dark:text-gray-300">
                         <tr><td class="px-4 py-2">7</td><td class="px-4 py-2">6.5</td><td class="px-4 py-2">40</td></tr>
                         <tr><td class="px-4 py-2">8</td><td class="px-4 py-2">7.5</td><td class="px-4 py-2">41</td></tr>
                         <tr><td class="px-4 py-2">9</td><td class="px-4 py-2">8.5</td><td class="px-4 py-2">42</td></tr>
@@ -114,15 +150,15 @@
             <p>
                 If you are unsure of your size, do not rely on the tag of your old sneakers. Feet can change shape and size over time due to age or weight changes.
             </p>
-            <ol class="list-decimal list-inside space-y-3 mb-8 text-gray-700 pl-4">
+            <ol class="list-decimal list-inside space-y-3 mb-8 text-gray-700 dark:text-gray-300 pl-4">
                 <li><strong>Trace:</strong> Stand on a piece of paper wearing the socks you intend to wear with the shoes. Trace the outline of your foot.</li>
                 <li><strong>Measure:</strong> Use a ruler to measure from the very back of the heel to the tip of your longest toe.</li>
                 <li><strong>Add Space:</strong> Add about 0.5 cm (or 1/4 inch) to this measurement to ensure your toes have room to move.</li>
-                <li><strong>Convert:</strong> Use our <a href="../index.html" class="text-blue-600 underline">UnitHub Converter</a> to turn those inches into centimeters if you are shopping for European brands.</li>
+                <li><strong>Convert:</strong> Use our <a href="../index.html" class="text-blue-600 dark:text-blue-400 underline">UnitHub Converter</a> to turn those inches into centimeters if you are shopping for European brands.</li>
             </ol>
 
-            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mt-8">
-                <p class="text-sm text-blue-800">
+            <div class="bg-blue-50 dark:bg-blue-900/50 border-l-4 border-blue-500 p-4 mt-8">
+                <p class="text-sm text-blue-800 dark:text-blue-200">
                     <strong>Pro Tip:</strong> Always measure your feet in the afternoon or evening. Your feet naturally swell slightly throughout the day, so measuring them in the morning might result in buying shoes that feel tight by dinner time.
                 </p>
             </div>
@@ -130,16 +166,29 @@
         </article>
         
         <div class="mt-8 text-center">
-             <a href="../blog.html" class="inline-block bg-white text-primary border border-primary font-semibold px-6 py-3 rounded-lg hover:bg-blue-50 transition">
+             <a href="../blog.html" class="inline-block bg-white dark:bg-gray-800 text-primary dark:text-blue-400 border border-primary dark:border-blue-400 font-semibold px-6 py-3 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition">
                  &larr; Back to Articles
              </a>
         </div>
 
     </main>
 
-    <footer class="mt-12 py-6 bg-white border-t border-gray-200 text-center text-sm text-gray-500">
+    <footer class="mt-12 py-6 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
         <p>&copy; 2025 UnitHub. All rights reserved.</p>
     </footer>
+
+    <!-- Toggle Script -->
+    <script>
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        }
+    </script>
 
 </body>
 </html>
