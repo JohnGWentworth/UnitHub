@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Blitz: Conversion Challenge - UnitHub</title>
+    <meta name="description" content="Test your conversion skills in Unit Blitz. Compare Metric vs Imperial units against the clock.">
+    
+    <!-- Google Ads -->
+     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9610577818327831"
+     crossorigin="anonymous"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Firebase SDK (Currently commented out for Offline Mode) -->
+    <!-- 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        
+        // To enable Online Leaderboard later:
+        // 1. Uncomment these imports
+        // 2. Fill in firebaseConfig below
+        // 3. Set isFirebaseActive = true
+    </script> 
+    -->
+
+    <script>
+        // --- CONFIGURATION ---
+        const firebaseConfig = {
+            apiKey: "", // Paste API Key here later
+            authDomain: "",
+            projectId: "",
+            storageBucket: "",
+            messagingSenderId: "",
+            appId: ""
+        };
+
+        let db = null;
+        let isFirebaseActive = false; // Set to true when you add keys
+
+        // --- LEADERBOARD LOGIC ---
+        
+        async function submitScore(name, score) {
+            if (!name) name = "Player";
+            
+            // 1. Save Local (Primary for Offline Mode)
+            const localScores = JSON.parse(localStorage.getItem('unitBlitzScores')) || [];
+            localScores.push({ name, score, date: new Date().toISOString() });
+            localScores.sort((a, b) => b.score - a.score); // Sort High to Low
+            localStorage.setItem('unitBlitzScores', JSON.stringify(localScores.slice(0, 10))); // Keep top 10
+
+            // 2. Save to Firebase (Only if active)
+            if (isFirebaseActive && db) {
+                // Firebase logic here (placeholder for future)
+            }
+            
+            // Refresh Display
+            renderLeaderboard(localScores.slice(0, 10));
+        }
+
+        function loadLeaderboard() {
+            // Load Local Scores
+            const localScores = JSON.parse(localStorage.getItem('unitBlitzScores')) || [];
+            renderLeaderboard(localScores);
+        }
+
+        function renderLeaderboard(scores) {
+            const list = document.getElementById('leaderboard-list');
+            const topScoreDisplay = document.getElementById('local-top-score');
+            list.innerHTML = "";
+            
+            if (scores.length === 0) {
+                list.innerHTML = "<li class='text-gray-500 text-center italic'>No scores yet. Play to set a record!</li>";
+                topScoreDisplay.innerText = "-";
+                return;
+            }
+
+            // Update "Top Score" text on Intro Screen
+            topScoreDisplay.innerText = scores[0].score + " pts";
+
+            scores.forEach((entry, index) => {
+                const isTop3 = index < 3 ? "text-yellow-400 font-bold" : "text-gray-300";
+                const row = `
+                    <li class="flex justify-between items-center bg-gray-700/50 p-3 rounded mb-2 border border-gray-600">
+                        <span class="${isTop3}">#${index + 1} ${entry.name}</span>
+                        <span class="font-mono text-blue-400">${entry.score} pts</span>
+                    </li>
+                `;
+                list.innerHTML += row;
+            });
+        }
+
+        // Expose functions to global scope
+        window.submitGameScore = (n, s) => submitScore(n, s);
+        
+        // Load on startup
+        window.onload = function() {
+            loadLeaderboard();
+        };
+    </script>
+
+    <style>
+        /* Permanent Dark Theme */
+        body { background-color: #111827; color: #d1d5db; }
+        .bg-primary { background-color: #1e3a8a; } 
+        .text-primary { color: #60a5fa; }
+        
+        /* Game Specific Styles */
+        .game-card {
+            transition: transform 0.1s, background-color 0.2s;
+            cursor: pointer;
+        }
+        .game-card:active {
+            transform: scale(0.95);
+        }
+        .correct-flash { background-color: #059669 !important; border-color: #34d399 !important; }
+        .wrong-flash { background-color: #dc2626 !important; border-color: #f87171 !important; }
+        
+        .timer-bar {
+            transition: width 1s linear;
+        }
+    </style>
+</head>
+<body class="font-sans min-h-screen flex flex-col">
+    
+    <!-- Header Section -->
+    <header class="bg-primary text-white shadow-xl border-b border-gray-700 z-10">
+        <div class="max-w-4xl mx-auto p-4 md:p-6 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-extrabold"><a href="index.html" class="no-underline text-white">UnitHub</a></h1>
+                <p class="text-gray-300 text-sm">Universal Calculator</p>
+            </div>
+            <nav>
+                <a href="index.html" class="text-white hover:text-blue-200 mr-4">Tools</a>
+                <a href="blog.html" class="text-white hover:text-blue-200">Articles</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-4xl mx-auto w-full p-4 flex flex-col items-center justify-center">
+        
+        <!-- INTRO SCREEN -->
+        <div id="intro-screen" class="text-center max-w-lg w-full bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700">
+            <h1 class="text-4xl font-black text-white mb-2 tracking-tight">UNIT <span class="text-blue-500">BLITZ</span></h1>
+            <p class="text-gray-400 mb-8">Test your intuition. Click the value that is <strong class="text-white">BIGGER</strong>.</p>
+            
+            <div class="space-y-4">
+                <button onclick="startGame()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-lg text-xl shadow-lg transform hover:-translate-y-1 transition">
+                    START GAME
+                </button>
+                <div class="text-sm text-gray-500 mt-4">
+                    Your High Score: <span id="local-top-score" class="text-blue-400 font-bold">-</span>
+                </div>
+            </div>
+
+            <!-- Leaderboard Preview -->
+            <div class="mt-8 pt-8 border-t border-gray-700 text-left">
+                <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Your Top Scores (Local)</h3>
+                <ul id="leaderboard-list" class="text-sm space-y-2">
+                    <li class="text-gray-600">Loading scores...</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- GAME SCREEN (Hidden by default) -->
+        <div id="game-screen" class="hidden w-full max-w-2xl">
+            <!-- HUD -->
+            <div class="flex justify-between items-center mb-6">
+                <div class="text-xl font-bold text-gray-400">Score: <span id="score-display" class="text-white text-2xl">0</span></div>
+                <div class="text-xl font-bold text-gray-400">Time: <span id="time-display" class="text-white text-2xl">60</span>s</div>
+            </div>
+            
+            <!-- Timer Bar -->
+            <div class="w-full bg-gray-700 h-2 rounded-full mb-8 overflow-hidden">
+                <div id="timer-bar-fill" class="bg-blue-500 h-full w-full"></div>
+            </div>
+
+            <!-- Cards Container -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Option A -->
+                <div id="card-a" onclick="handleChoice('A')" class="game-card bg-gray-800 p-12 rounded-xl border-4 border-gray-700 hover:border-blue-500 flex flex-col items-center justify-center h-64 select-none">
+                    <span id="val-a" class="text-4xl font-black text-white">...</span>
+                    <span id="unit-a" class="text-xl text-gray-400 mt-2">...</span>
+                </div>
+
+                <!-- VS Badge (Absolute centered on desktop) -->
+                <div class="hidden md:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-900 rounded-full p-4 border-4 border-gray-800 z-10">
+                    <span class="font-black text-gray-500">VS</span>
+                </div>
+
+                <!-- Option B -->
+                <div id="card-b" onclick="handleChoice('B')" class="game-card bg-gray-800 p-12 rounded-xl border-4 border-gray-700 hover:border-blue-500 flex flex-col items-center justify-center h-64 select-none">
+                    <span id="val-b" class="text-4xl font-black text-white">...</span>
+                    <span id="unit-b" class="text-xl text-gray-400 mt-2">...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- GAME OVER SCREEN (Hidden by default) -->
+        <div id="game-over-screen" class="hidden text-center max-w-lg w-full bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700">
+            <h2 class="text-3xl font-black text-white mb-2">TIME'S UP!</h2>
+            <p class="text-gray-400 mb-6">Final Score: <span id="final-score" class="text-blue-400 text-2xl font-bold">0</span></p>
+            
+            <div class="space-y-4">
+                <input type="text" id="player-name" placeholder="Enter Your Name" maxlength="12" class="w-full p-3 rounded bg-gray-900 border border-gray-600 text-white text-center focus:outline-none focus:border-blue-500">
+                
+                <button onclick="saveAndRestart()" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded-lg shadow-lg">
+                    Save Score & Replay
+                </button>
+                <button onclick="location.reload()" class="w-full bg-gray-700 hover:bg-gray-600 text-gray-300 font-bold py-3 rounded-lg">
+                    Skip
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Game Logic -->
+    <script>
+        // Game State
+        let score = 0;
+        let timeLeft = 60;
+        let timerInterval = null;
+        let currentCorrectOption = ''; 
+
+        // Conversion Logic
+        const generators = [
+            {
+                type: 'length',
+                units: [
+                    { name: 'Miles', factor: 1609.34 },
+                    { name: 'Kilometers', factor: 1000 },
+                    { name: 'Meters', factor: 1 },
+                    { name: 'Yards', factor: 0.9144 },
+                    { name: 'Feet', factor: 0.3048 }
+                ]
+            },
+            {
+                type: 'weight',
+                units: [
+                    { name: 'Kilograms', factor: 1000 },
+                    { name: 'Pounds', factor: 453.592 },
+                    { name: 'Stone', factor: 6350.29 },
+                    { name: 'Ounces', factor: 28.3495 }
+                ]
+            },
+            {
+                type: 'volume',
+                units: [
+                    { name: 'Liters', factor: 1000 },
+                    { name: 'Gallons (US)', factor: 3785.41 },
+                    { name: 'Pints (US)', factor: 473.176 },
+                    { name: 'Cups', factor: 240 }
+                ]
+            },
+             {
+                type: 'temp', 
+                units: [
+                    { name: 'Celsius', toBase: c => c, fromBase: c => c },
+                    { name: 'Fahrenheit', toBase: f => (f - 32) * 5/9, fromBase: c => (c * 9/5) + 32 }
+                ]
+            }
+        ];
+
+        function startGame() {
+            document.getElementById('intro-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            score = 0;
+            timeLeft = 60;
+            updateHUD();
+            nextQuestion();
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateHUD();
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function updateHUD() {
+            document.getElementById('score-display').innerText = score;
+            document.getElementById('time-display').innerText = timeLeft;
+            const percentage = (timeLeft / 60) * 100;
+            document.getElementById('timer-bar-fill').style.width = percentage + "%";
+            
+            if (timeLeft < 10) {
+                document.getElementById('timer-bar-fill').classList.add('bg-red-500');
+                document.getElementById('timer-bar-fill').classList.remove('bg-blue-500');
+            }
+        }
+
+        function nextQuestion() {
+            const cat = generators[Math.floor(Math.random() * generators.length)];
+            
+            let u1 = cat.units[Math.floor(Math.random() * cat.units.length)];
+            let u2 = cat.units[Math.floor(Math.random() * cat.units.length)];
+            while (u1 === u2) {
+                u2 = cat.units[Math.floor(Math.random() * cat.units.length)];
+            }
+
+            let val1 = Math.floor(Math.random() * 100) + 5; 
+            
+            let val1InBase, equivalentInU2;
+            
+            if (cat.type === 'temp') {
+                val1InBase = u1.toBase(val1);
+                equivalentInU2 = u2.fromBase(val1InBase);
+            } else {
+                val1InBase = val1 * u1.factor;
+                equivalentInU2 = val1InBase / u2.factor;
+            }
+
+            let modifier = (Math.random() * 0.4) + 0.8; 
+            if (modifier > 0.95 && modifier < 1.05) modifier = 1.2; 
+            
+            let val2 = Math.round(equivalentInU2 * modifier);
+            if (val2 === Math.round(equivalentInU2)) val2 += 5; 
+
+            let val2InBase;
+            if (cat.type === 'temp') {
+                val2InBase = u2.toBase(val2);
+            } else {
+                val2InBase = val2 * u2.factor;
+            }
+
+            currentCorrectOption = val1InBase > val2InBase ? 'A' : 'B';
+
+            document.getElementById('val-a').innerText = val1;
+            document.getElementById('unit-a').innerText = u1.name;
+            document.getElementById('val-b').innerText = val2;
+            document.getElementById('unit-b').innerText = u2.name;
+
+            resetCardStyles();
+        }
+
+        function handleChoice(choice) {
+            const cardA = document.getElementById('card-a');
+            const cardB = document.getElementById('card-b');
+
+            if (choice === currentCorrectOption) {
+                score += 10;
+                if (choice === 'A') cardA.classList.add('correct-flash');
+                else cardB.classList.add('correct-flash');
+                
+                setTimeout(() => {
+                    nextQuestion();
+                }, 200);
+            } else {
+                timeLeft -= 5; 
+                score = Math.max(0, score - 5);
+                updateHUD();
+                
+                if (choice === 'A') cardA.classList.add('wrong-flash');
+                else cardB.classList.add('wrong-flash');
+                
+                setTimeout(() => {
+                    nextQuestion();
+                }, 200);
+            }
+        }
+
+        function resetCardStyles() {
+            const cards = document.querySelectorAll('.game-card');
+            cards.forEach(c => {
+                c.classList.remove('correct-flash', 'wrong-flash');
+            });
+        }
+
+        function endGame() {
+            clearInterval(timerInterval);
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('game-over-screen').classList.remove('hidden');
+            document.getElementById('final-score').innerText = score;
+        }
+
+        function saveAndRestart() {
+            const name = document.getElementById('player-name').value.trim() || "Player";
+            if (window.submitGameScore) {
+                window.submitGameScore(name, score);
+            }
+            setTimeout(() => location.reload(), 1000);
+        }
+    </script>
+</body>
+</html>
