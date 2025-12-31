@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ultimate Guide to Shoe Sizing: US vs. UK vs. EU - UnitHub</title>
+    <meta name="description" content="A comprehensive guide to understanding the differences between US, UK, and European shoe sizes. Learn why they differ and how to convert accurately.">
+    <!-- Load Tailwind CSS -->
+     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9610577818327831"
+     crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .bg-primary { background-color: #3b82f6; }
+        .text-primary { color: #3b82f6; }
+        /* Typography for Article Readability */
+        article p { margin-bottom: 1.5rem; line-height: 1.8; color: #374151; font-size: 1.125rem; }
+        article h2 { font-size: 1.875rem; font-weight: 700; color: #1f2937; margin-top: 2.5rem; margin-bottom: 1rem; }
+        article h3 { font-size: 1.5rem; font-weight: 600; color: #1f2937; margin-top: 2rem; margin-bottom: 0.75rem; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
+    
+    <!-- Header Section -->
+    <header class="bg-primary text-white shadow-xl">
+        <div class="max-w-4xl mx-auto p-4 md:p-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
+                        <a href="../index.html" class="hover:underline">UnitHub</a>
+                    </h1>
+                    <p class="text-gray-200 mt-1 text-sm md:text-base">Universal Calculator & Conversion Cheat Sheet</p>
+                </div>
+                <!-- Navigation Bar -->
+                <nav class="mt-4 md:mt-0">
+                    <ul class="flex space-x-6 text-lg font-semibold">
+                        <li><a href="../index.html" class="hover:text-gray-200 transition">Tools</a></li>
+                        <li><a href="../blog.html" class="hover:text-gray-200 border-b-2 border-white">Articles</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-3xl mx-auto px-4 mt-10 mb-16">
+        
+        <article class="bg-white p-8 md:p-12 rounded-lg shadow-xl">
+            <header class="mb-10 border-b pb-8">
+                <span class="text-sm font-bold text-primary uppercase tracking-wider">Lifestyle & Fashion</span>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mt-2 mb-4">The Ultimate Guide to Shoe Sizing: US, UK, and EU Explained</h1>
+                <div class="text-gray-500 text-sm">
+                    Published: December 2025 &bull; 4 min read
+                </div>
+            </header>
+
+            <p>
+                There are few things more frustrating than ordering a pair of shoes online, waiting a week for them to arrive, and realizing they don't fit because the size conversion was wrong. If you’ve ever wondered why a size 10 in the US is a size 9 in the UK but a size 44 in Europe, you aren't alone. The world of international shoe sizing is a chaotic mix of history, varying standards, and different measurement units.
+            </p>
+
+            <p>
+                In this guide, we will break down the three major sizing systems, explain the "barleycorn" measurement that started it all, and provide you with a reliable way to convert your size so you never have to make a return again.
+            </p>
+
+            <h2>The History of the Barleycorn</h2>
+            <p>
+                To understand why shoe sizes are so confusing, we have to look back to medieval England. In 1324, King Edward II declared that three barleycorns placed end-to-end equaled one inch. This became the basis for shoe sizing systems in the English-speaking world.
+            </p>
+            <p>
+                The <strong>UK system</strong> is still based loosely on this "barleycorn" unit (1/3 of an inch). A child's size 0 is 4 inches long (the width of a hand). Each subsequent size adds one barleycorn (1/3 inch) to the length of the last used shoe (the wooden form used to mold the shoe), not the foot itself.
+            </p>
+            <p>
+                The <strong>US system</strong> adopted this same logic but with a twist: they started the scale at a slightly different point. This is why US men's sizes are generally one full number higher than their UK counterparts (e.g., a US 10 is a UK 9).
+            </p>
+
+            <h2>The European System (Paris Point)</h2>
+            <p>
+                While the US and UK were fiddling with barleycorns, Continental Europe adopted the Metric system. Their shoe sizing is based on the <strong>Paris Point</strong>, which was established in the mid-19th century.
+            </p>
+            <p>
+                One Paris Point equals exactly 2/3 of a centimeter (6.67 mm). Because this unit is smaller than the barleycorn (8.46 mm), European sizes run up into the high numbers like 40, 42, and 44. This finer granularity often allows for a more precise fit without needing "half sizes," though many modern European brands now offer half sizes as well.
+            </p>
+
+            <h2>The Conversion Cheat Sheet</h2>
+            <p>
+                While there is no perfectly linear formula because manufacturers vary, these are the generally accepted standard conversions used by major brands like Nike, Adidas, and Clarks.
+            </p>
+
+            <div class="my-8 overflow-x-auto bg-gray-50 rounded-lg border border-gray-200">
+                <table class="min-w-full divide-y divide-gray-300 text-sm text-center">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-3 font-bold text-gray-700">US Men's</th>
+                            <th class="px-4 py-3 font-bold text-gray-700">UK Men's</th>
+                            <th class="px-4 py-3 font-bold text-gray-700">EU Size</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr><td class="px-4 py-2">7</td><td class="px-4 py-2">6.5</td><td class="px-4 py-2">40</td></tr>
+                        <tr><td class="px-4 py-2">8</td><td class="px-4 py-2">7.5</td><td class="px-4 py-2">41</td></tr>
+                        <tr><td class="px-4 py-2">9</td><td class="px-4 py-2">8.5</td><td class="px-4 py-2">42</td></tr>
+                        <tr><td class="px-4 py-2">10</td><td class="px-4 py-2">9.5</td><td class="px-4 py-2">43</td></tr>
+                        <tr><td class="px-4 py-2">11</td><td class="px-4 py-2">10.5</td><td class="px-4 py-2">44</td></tr>
+                        <tr><td class="px-4 py-2">12</td><td class="px-4 py-2">11.5</td><td class="px-4 py-2">45</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>A Note on Women's Sizing</h3>
+            <p>
+                It is important to note that the gap between men's and women's sizes differs by region. In the US, there is typically a 1.5 size difference between men and women (a men's 7 is roughly a women's 8.5). However, in the UK system, the scale is often unisex, meaning a size 5 is a size 5 regardless of gender. Always check the specific brand's size chart before purchasing.
+            </p>
+
+            <h2>How to Measure Your Feet at Home</h2>
+            <p>
+                If you are unsure of your size, do not rely on the tag of your old sneakers. Feet can change shape and size over time due to age or weight changes.
+            </p>
+            <ol class="list-decimal list-inside space-y-3 mb-8 text-gray-700 pl-4">
+                <li><strong>Trace:</strong> Stand on a piece of paper wearing the socks you intend to wear with the shoes. Trace the outline of your foot.</li>
+                <li><strong>Measure:</strong> Use a ruler to measure from the very back of the heel to the tip of your longest toe.</li>
+                <li><strong>Add Space:</strong> Add about 0.5 cm (or 1/4 inch) to this measurement to ensure your toes have room to move.</li>
+                <li><strong>Convert:</strong> Use our <a href="../index.html" class="text-blue-600 underline">UnitHub Converter</a> to turn those inches into centimeters if you are shopping for European brands.</li>
+            </ol>
+
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mt-8">
+                <p class="text-sm text-blue-800">
+                    <strong>Pro Tip:</strong> Always measure your feet in the afternoon or evening. Your feet naturally swell slightly throughout the day, so measuring them in the morning might result in buying shoes that feel tight by dinner time.
+                </p>
+            </div>
+
+        </article>
+        
+        <div class="mt-8 text-center">
+             <a href="../blog.html" class="inline-block bg-white text-primary border border-primary font-semibold px-6 py-3 rounded-lg hover:bg-blue-50 transition">
+                 &larr; Back to Articles
+             </a>
+        </div>
+
+    </main>
+
+    <footer class="mt-12 py-6 bg-white border-t border-gray-200 text-center text-sm text-gray-500">
+        <p>&copy; 2025 UnitHub. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
